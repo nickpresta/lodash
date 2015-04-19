@@ -1,5 +1,4 @@
-var getLength = require('./getLength'),
-    isLength = require('./isLength'),
+var isArrayLike = require('./isArrayLike'),
     toObject = require('./toObject');
 
 /**
@@ -12,11 +11,11 @@ var getLength = require('./getLength'),
  */
 function createBaseEach(eachFunc, fromRight) {
   return function(collection, iteratee) {
-    var length = collection ? getLength(collection) : 0;
-    if (!isLength(length)) {
+    if (!isArrayLike(collection)) {
       return eachFunc(collection, iteratee);
     }
-    var index = fromRight ? length : -1,
+    var length = collection.length,
+        index = fromRight ? length : -1,
         iterable = toObject(collection);
 
     while ((fromRight ? index-- : ++index < length)) {
