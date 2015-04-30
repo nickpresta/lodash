@@ -1,4 +1,4 @@
-define(['./getLength', './isLength', './toObject'], function(getLength, isLength, toObject) {
+define(['./isArrayLike', './toObject'], function(isArrayLike, toObject) {
 
   /**
    * Creates a `baseEach` or `baseEachRight` function.
@@ -10,11 +10,11 @@ define(['./getLength', './isLength', './toObject'], function(getLength, isLength
    */
   function createBaseEach(eachFunc, fromRight) {
     return function(collection, iteratee) {
-      var length = collection ? getLength(collection) : 0;
-      if (!isLength(length)) {
+      if (!isArrayLike(collection)) {
         return eachFunc(collection, iteratee);
       }
-      var index = fromRight ? length : -1,
+      var length = collection.length,
+          index = fromRight ? length : -1,
           iterable = toObject(collection);
 
       while ((fromRight ? index-- : ++index < length)) {
