@@ -1,5 +1,4 @@
-import getLength from './getLength';
-import isLength from './isLength';
+import isArrayLike from './isArrayLike';
 import toObject from './toObject';
 
 /**
@@ -12,11 +11,11 @@ import toObject from './toObject';
  */
 function createBaseEach(eachFunc, fromRight) {
   return function(collection, iteratee) {
-    var length = collection ? getLength(collection) : 0;
-    if (!isLength(length)) {
+    if (!isArrayLike(collection)) {
       return eachFunc(collection, iteratee);
     }
-    var index = fromRight ? length : -1,
+    var length = collection.length,
+        index = fromRight ? length : -1,
         iterable = toObject(collection);
 
     while ((fromRight ? index-- : ++index < length)) {
